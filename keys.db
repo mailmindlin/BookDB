@@ -1,0 +1,5 @@
+# KEYS.db is a database file of books. It may be searched through by any means.
+#syntax: [F/NF] [GENRE] "[title]" BY [author]
+#begin
+F UNKNOWN "Ordinary People" BY Judith  Guest
+#end
