@@ -70,3 +70,7 @@ Database.prototype.resultSetHandler = function(transaction, results) {
 Database.prototype.query = function (query, params, callback) {
 	this.mydb.transaction(function(transaction){transaction.executeSql(query, params, function(tx, res){callback(res);});});
 };
+Database.prototype.bookIndex=0;
+Database.prototype.putBook = function (author, title, genre) {
+	this.query("INSERT INTO books VALUES ("+(this.bookIndex++)+", "+author+", "+title+", "+genre+");",[],function(){});
+};
