@@ -1,5 +1,7 @@
-var Database = function(){
+var Database = function(name, description){
 	var mydb=false;
+	this.name = name;
+	this.desc=description;
 };
  
 Database.prototype.initDB = function() {
@@ -7,9 +9,9 @@ Database.prototype.initDB = function() {
 		if (!window.openDatabase) {
 			alert('not supported');
 		} else {
-			var shortName = 'sampledatabase';
+			var shortName = this.name;
 			var version = '1.0';
-			var displayName = 'Sample Database';
+			var displayName = this.desc;
 			var maxSize = 65536; // in bytes
 			this.mydb = openDatabase(shortName, version, displayName, maxSize);
 		}
