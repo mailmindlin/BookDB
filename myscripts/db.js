@@ -72,5 +72,5 @@ Database.prototype.query = function (query, params, callback) {
 };
 Database.prototype.bookIndex=0;
 Database.prototype.putBook = function (author, title, genre) {
-	this.query("INSERT INTO books VALUES ("+(this.bookIndex++)+", "+author+", "+title+", "+genre+");",[],function(){});
+	this.query("INSERT INTO books VALUES ("+(this.bookIndex++)+", \""+author+"\", \""+title+"\", \""+genre+"\");",[],function(){});
 };
