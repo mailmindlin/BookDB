@@ -18,6 +18,38 @@ Database.prototype.initDB = function() {
 	} catch(e) {}
 };
 
+Database.prototype.createTable = function() {
+	try {
+		this.mydb.transaction(
+		  function(transaction) {
+			//transaction.executeSql('DROP TABLE sample_db', [], this.nullDataHandler, this.errorHandler);
+            transaction.executeSql("CREATE TABLE IF NOT EXISTS books(id INTEGER PRIMARY KEY ASC, Author STRING, Title STRING, Genre STRING)", [], this.nullDataHandler, this.errorHandler); 
+          });
+      } catch(e) {}
+}
+
+Database.prototype.errorHandler = function (transaction, error) { 
+  // returns true to rollback the transaction
+  alert("Error processing SQL: "+ error);
+  return true;  
+}
+
+// null db data handler
+Database.prototype.nullDataHandler = function (transaction, results) {
+}
+
+Database.prototype.saveData = function(name_field, interval) {
+	try{
+		this.mydb.transaction(
+		  function(transaction) {
+			transaction.executeSql("INSERT INTO sample_db (name_field, interval) VALUES (" + name_field + ", " + interval + ");", [], this.nullDataHandler, this.errorHandler);
+		});
+	} catch(e) {
+		alert("Error processing SQL: "+ e.message);
+		return;
+	}
+}
+
 // Then we can easily make a new Database object and call the initDB method.
 // load the currently selected icons
 Database.prototype.loadData = function() {
@@ -35,6 +67,6 @@ Database.prototype.resultSetHandler = function(transaction, results) {
     console.log(results);
 };
 
-Database.prototype.query = function (str, callback) {
-	this.mydb.transaction(function(transaction){callback(transaction.executeSql(str));});
+Database.prototype.query = function (query, params, callback) {
+	this.mydb.transaction(function(transaction){transaction.executeSql(query, params, function(tx, res){callback(res);});});
 };
